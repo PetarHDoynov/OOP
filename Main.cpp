@@ -1,26 +1,17 @@
 #include <iostream>
 #include <fstream>
+#include "Beer.h"
 
 int main() {
-	int current, result;
-	std::ifstream in("data.dat", std::ios::binary | std::ios::in);
-	if (!in) {
-		return -1, current = 0;
+	Beer beer1("Stella Artois", 500);
+	Beer beer2("Heineken", 500);
+	beer1.AddBeer(beer2, 250);
+	std::cout << beer1.GetBrand() << " " << beer1.GetVolume() << "ml" << "\n";
+	std::cout << beer2.GetBrand() << " " << beer2.GetVolume() << "ml" << "\n";
+	if (beer1.Check(beer2.GetBrand())) {
+		std::cout << "true";
 	}
-	
-	in.seekg(0, std::ios::end);
-	int size = in.tellg();
-	if (size % 4 != 0) {
-		std::cout << "Error";
-		in.close();
-		return -1;
+	else {
+		std::cout << "false";
 	}
-	in.seekg(0, std::ios::beg);
-
-	while (in.read(reinterpret_cast<char*>(&current), sizeof(int))) {
-		result = std::max(result, current);
-	}
-
-	std::cout << result;
-	return 0;
 }
